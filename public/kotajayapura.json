@@ -1,0 +1,24 @@
+{
+    "Abepura": [
+        "Abepantai",
+        "Asano",
+        "Abllyg",
+        "Kota Baru",
+        "Vim",
+        "Wahno",
+        "Way Mnorock",
+        "Yobe"
+    ],
+    "Heram": ["Hedam", "Wena", "Yabansai"],
+    "Jayapura Utara": [
+        "Angkasapura",
+        "Bayangkara",
+        "GuratEsi",
+        "Imbi",
+        "Mandala",
+        "Tanjung Ria",
+        "Trikora"
+    ],
+    "Jayapura Selatan": ["Numbay", "Hamadi", "Entrop", "Argapura", "Ardipura"],
+    "Muara Tami": ["Koya Barat", "Koya Timur"]
+}
