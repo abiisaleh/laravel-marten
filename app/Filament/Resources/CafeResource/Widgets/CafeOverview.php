@@ -22,20 +22,20 @@ class CafeOverview extends BaseWidget
     {
         return [
             Stat::make('Total Cafe', $this->getPageTableQuery()->count()),
+            Stat::make('Sudah Dinilai', $this->getPageTableQuery()
+                ->where('k_suasana','!=',null)
+                ->orWhere('k_variasi_menu','!=',null)
+                ->orWhere('k_fasilitas','!=',null)
+                ->orWhere('k_pelayanan','!=',null)
+                ->orWhere('k_lokasi','!=',null)
+                ->count()
+            ),
             Stat::make('Belum Dinilai', $this->getPageTableQuery()
                 ->where('k_suasana',null)
                 ->orWhere('k_variasi_menu',null)
                 ->orWhere('k_fasilitas',null)
                 ->orWhere('k_pelayanan',null)
                 ->orWhere('k_lokasi',null)
-                ->count()
-            ),
-            Stat::make('Sudah Dinilai', $this->getPageTableQuery()
-                ->where('k_suasana',!null)
-                ->orWhere('k_variasi_menu',!null)
-                ->orWhere('k_fasilitas',!null)
-                ->orWhere('k_pelayanan',!null)
-                ->orWhere('k_lokasi',!null)
                 ->count()
             ),
         ];

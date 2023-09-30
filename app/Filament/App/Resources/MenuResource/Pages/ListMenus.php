@@ -21,7 +21,7 @@ class ListMenus extends ListRecords
     protected function getHeaderWidgets(): array
     {
         return [
-            MenuStats::class,
+            // MenuStats::class,
         ];
     }
 }

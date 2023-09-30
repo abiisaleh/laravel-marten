@@ -18,7 +18,7 @@
         <div class="px-4 mx-auto text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36">
             <span class="font-semibold text-gray-400 uppercase">MADE WITH</span>
             <div class="flex flex-wrap justify-center items-center mt-8 text-gray-500 sm:justify-between">
-                <a href="#" class="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400">
+                <a href="https://laravel.com" class="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="175" height="50" viewBox="0 0 175 50" xml:space="preserve">
                         <desc>Created with Fabric.js 5.2.4</desc>
                         <defs>
@@ -76,7 +76,7 @@
                         </g>
                         </svg>
                 </a>
-                <a href="#" class="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400">
+                <a href="https://tailwindcss.com" class="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="250" height="50" viewBox="0 0 250 50" xml:space="preserve">
                         <desc>Created with Fabric.js 5.2.4</desc>
                         <defs>
@@ -145,7 +145,7 @@
                         </g>
                         </svg>                      
                 </a>
-                <a href="#" class="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400">
+                <a href="https://filamentphp.com" class="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="200" height="50" viewBox="0 0 200 50" xml:space="preserve">
                         <desc>Created with Fabric.js 5.2.4</desc>
                         <defs>

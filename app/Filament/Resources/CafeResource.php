@@ -21,10 +21,13 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\File;
 
 class CafeResource extends Resource
 {
@@ -92,13 +95,39 @@ class CafeResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('nama'),
+                TextColumn::make('nama')
+                    ->searchable(),
                 TextColumn::make('alamat'),
                 TextColumn::make('kelurahan'),
                 TextColumn::make('kecamatan'),
             ])
             ->filters([
-                //
+                Filter::make('Dinilai')
+                    ->query(fn (Builder $query): Builder => $query
+                        ->where('k_suasana','!=',null)
+                        ->orWhere('k_variasi_menu','!=',null)
+                        ->orWhere('k_fasilitas','!=',null)
+                        ->orWhere('k_pelayanan','!=',null)
+                        ->orWhere('k_lokasi','!=',null)
+                    )
+                    ->checkbox(),
+                Filter::make('Belum Dinilai')
+                    ->query(fn (Builder $query): Builder => $query
+                        ->where('k_suasana',null)
+                        ->orWhere('k_variasi_menu',null)
+                        ->orWhere('k_fasilitas',null)
+                        ->orWhere('k_pelayanan',null)
+                        ->orWhere('k_lokasi',null)
+                    )
+                    ->checkbox(),
+                SelectFilter::make('kecamatan')
+                    ->options(function() {
+                        $data = File::json('kotajayapura.json');
+                        foreach ($data as $key => $value) {
+                            $options[$key] = $key;
+                        }
+                        return $options;
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

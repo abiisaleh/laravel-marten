@@ -22,7 +22,8 @@ class RegisterTeam extends RegisterTenant
     {
         return $form
             ->schema([
-                TextInput::make('nama'),
+                TextInput::make('nama')
+                    ->required(),
                 Select::make('kecamatan')
                     ->native(false)
                     ->options(function() {
@@ -31,7 +32,8 @@ class RegisterTeam extends RegisterTenant
                             $options[$key] = $key;
                         }
                         return $options;
-                    }),
+                    })
+                    ->required(),
                 Select::make('kelurahan')
                     ->native(false)
                     ->options(function(Get $get) {
@@ -45,8 +47,10 @@ class RegisterTeam extends RegisterTenant
                             $options[$item] = $item;
                         }
                         return $options;
-                    }),
-                Textarea::make('alamat'),
+                    })
+                    ->required(),
+                Textarea::make('alamat')
+                    ->required(),
             ]);
     }
     
