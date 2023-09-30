@@ -144,7 +144,7 @@
     </h2>
     <div id="accordion-collapse-body-3" class="hidden" aria-labelledby="accordion-collapse-heading-3">
       <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
-        <p class="mb-2 text-gray-500 dark:text-gray-400">Menentukan nilai akhir dari masing-masing kriteria dengan mengalihkan nilai yang didapat dari hasil normalisasi bobot kriteria dan hasil nilai utility. Kemudian jumlahkan hasil dari perkalian nilai normalisasi dan utility.</p>
+        <p class="mb-2 text-gray-500 dark:text-gray-400">Menghitung semua kriteria dengan jenis sifat kriteria “lebih besar lebih baik”.</p>
         <div class="relative overflow-x-auto">
           <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
