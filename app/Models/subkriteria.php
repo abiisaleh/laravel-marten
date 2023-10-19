@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class subkriteria extends Model
+class Subkriteria extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
 
-    protected $fillable = ['nama','nilai'];
+    protected $fillable = ['nama', 'nilai'];
 
-    public function kriteria(){
+    public function kriteria()
+    {
         return $this->belongsTo(kriteria::class);
     }
 }

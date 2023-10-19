@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class menu extends Model
+class Menu extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama','harga','jenis','deskripsi'];
+    protected $fillable = ['nama', 'harga', 'jenis', 'deskripsi'];
 
-    public function cafe(){
+    public function cafe()
+    {
         return $this->belongsTo(cafe::class);
     }
 }

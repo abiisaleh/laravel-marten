@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class cafe extends Model implements HasName
+class Cafe extends Model implements HasName
 {
     use HasFactory;
 
-    protected $fillable = ['nama','alamat','kecamatan','kelurahan','k_suasana','k_variasi_menu','k_fasilitas','k_pelayanan','k_lokasi','gambar'];
+    protected $fillable = ['nama', 'alamat', 'kecamatan', 'kelurahan', 'k_suasana', 'k_variasi_menu', 'k_fasilitas', 'k_pelayanan', 'k_lokasi', 'gambar'];
 
     public function menu(): HasMany
     {

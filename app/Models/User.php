@@ -51,12 +51,12 @@ class User extends Authenticatable implements FilamentUser, HasTenants
     {
         return $this->cafe;
     }
-    
+
     public function cafe(): BelongsToMany
     {
         return $this->belongsToMany(cafe::class);
     }
- 
+
     public function canAccessTenant(Model $tenant): bool
     {
         return $this->cafe->contains($tenant);
@@ -67,7 +67,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants
         if ($panel->getPath() == 'admin') {
             return $this->is_admin;
         } elseif ($panel->getPath() == 'app') {
-            return !$this->is_admin;   
+            return !$this->is_admin;
         }
 
         return false;

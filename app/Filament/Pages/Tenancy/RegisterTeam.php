@@ -1,7 +1,8 @@
 <?php
+
 namespace App\Filament\Pages\Tenancy;
 
-use App\Models\cafe;
+use App\Models\Cafe;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -17,7 +18,7 @@ class RegisterTeam extends RegisterTenant
     {
         return 'Daftarkan Cafe';
     }
-    
+
     public function form(Form $form): Form
     {
         return $form
@@ -26,7 +27,7 @@ class RegisterTeam extends RegisterTenant
                     ->required(),
                 Select::make('kecamatan')
                     ->native(false)
-                    ->options(function() {
+                    ->options(function () {
                         $data = FacadesFile::json('kotajayapura.json');
                         foreach ($data as $key => $value) {
                             $options[$key] = $key;
@@ -36,7 +37,7 @@ class RegisterTeam extends RegisterTenant
                     ->required(),
                 Select::make('kelurahan')
                     ->native(false)
-                    ->options(function(Get $get) {
+                    ->options(function (Get $get) {
                         $kecamatan = $get('kecamatan');
                         $data = FacadesFile::json('kotajayapura.json');
                         if (!$kecamatan) {
@@ -53,13 +54,13 @@ class RegisterTeam extends RegisterTenant
                     ->required(),
             ]);
     }
-    
+
     protected function handleRegistration(array $data): cafe
     {
         $team = cafe::create($data);
-        
+
         $team->members()->attach(auth()->user());
-        
+
         return $team;
     }
 }

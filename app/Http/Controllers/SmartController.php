@@ -83,14 +83,15 @@ class SmartController extends Controller
         $fasilitas = request('k_fasilitas');
         $variasiMenu = request('k_variasi_menu');
 
-        $data = cafe::where('k_suasana','>=',$suasana)
-            ->where('k_variasi_menu','>=',$variasiMenu)
-            ->where('k_fasilitas','>=',$fasilitas)
-            ->where('k_pelayanan','>=',$pelayanan)
-            ->where('k_lokasi','>=',$lokasi)
-            ->get();
+        $data = cafe::with('menu');
+        
+        if ($suasana != '0') $data->where('k_suasana',$suasana);
+        if ($variasiMenu != '0') $data->where('k_variasi_menu',$variasiMenu);
+        if ($fasilitas != '0') $data->where('k_fasilitas',$fasilitas);
+        if ($pelayanan != '0') $data->where('k_pelayanan',$pelayanan);
+        if ($lokasi != '0') $data->where('k_lokasi',$lokasi);
 
-        foreach ($data as $alternatif) {
+        foreach ($data->get() as $alternatif) {
             $nilai = [];
             $nilai['nilai'][] = subkriteria::find($alternatif->k_suasana)->nilai;
             $nilai['nilai'][] = subkriteria::find($alternatif->k_variasi_menu)->nilai;
@@ -112,7 +113,7 @@ class SmartController extends Controller
         );
 
         return view('pages.rekomendasi',[
-            'cafe' => $data,
+            'cafe' => $data->get(),
             'kriteria' => $kriteria,
             'normalisasi' => $result[0],
             'alternatif' => $alt,
