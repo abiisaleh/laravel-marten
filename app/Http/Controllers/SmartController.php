@@ -2,31 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\cafe;
-use App\Models\kriteria;
-use App\Models\subkriteria;
+use App\Models\Cafe;
+use App\Models\Kriteria;
+use App\Models\Subkriteria;
 use Illuminate\View\View;
 use Symfony\Component\Console\Input\Input;
 
 class SmartController extends Controller
 {
     /**
-    * Metode SMART (Simple Multi Attribute Rating Technique)
-    *
-    * Dataset adalah data alternatif kuantitatif dalam bentuk array.
-    * ex. $dataset = [
-    *          [25000, 153, 15.3, 250],   #a1
-    *          [33000, 177, 12.3, 380],   #a2
-    *          [40000, 199, 11.1, 480]    #a3
-    * ];
-    *
-    * Grades digunakan untuk menghitung bobot.
-    * ex. $grades = [9, 5, 7, 6];
-    *
-    * Criterion Type: 'benefit' or 'cost'.
-    * ex. $criterion_type = ['cost', 'benefit', 'cost', 'benefit'];
-    */
-    public function smart(array $alternatif, array $dataset,array $grades,array $criterion_type) 
+     * Metode SMART (Simple Multi Attribute Rating Technique)
+     *
+     * Dataset adalah data alternatif kuantitatif dalam bentuk array.
+     * ex. $dataset = [
+     *          [25000, 153, 15.3, 250],   #a1
+     *          [33000, 177, 12.3, 380],   #a2
+     *          [40000, 199, 11.1, 480]    #a3
+     * ];
+     *
+     * Grades digunakan untuk menghitung bobot.
+     * ex. $grades = [9, 5, 7, 6];
+     *
+     * Criterion Type: 'benefit' or 'cost'.
+     * ex. $criterion_type = ['cost', 'benefit', 'cost', 'benefit'];
+     */
+    public function smart(array $alternatif, array $dataset, array $grades, array $criterion_type)
     {
         // normalisasi bobot
         foreach ($grades as $bobot) {
@@ -34,17 +34,17 @@ class SmartController extends Controller
         }
 
         //max & min value
-        for ($i=0; $i < count($grades); $i++) { 
+        for ($i = 0; $i < count($grades); $i++) {
             $max[] = max(array_column($dataset, $i));
             $min[] = min(array_column($dataset, $i));
         }
 
-        for ($i=0; $i < count($dataset); $i++) { 
-            for ($j=0; $j < count($dataset[$i]); $j++) { 
+        for ($i = 0; $i < count($dataset); $i++) {
+            for ($j = 0; $j < count($dataset[$i]); $j++) {
                 //utility
                 if ($min[$j] - $max[$j] == 0) {
                     $u = 0;
-                } else {   
+                } else {
                     if ($criterion_type[$j] == 0) {
                         $u = ($max[$j] - $dataset[$i][$j]) / ($max[$j] - $min[$j]);
                     } else {
@@ -63,7 +63,7 @@ class SmartController extends Controller
         }
 
         //urutkan
-        usort($result, fn($a, $b) => $b['value'] <=> $a['value']);
+        usort($result, fn ($a, $b) => $b['value'] <=> $a['value']);
 
         return [
             $w,
@@ -84,12 +84,12 @@ class SmartController extends Controller
         $variasiMenu = request('k_variasi_menu');
 
         $data = cafe::with('menu');
-        
-        if ($suasana != '0') $data->where('k_suasana',$suasana);
-        if ($variasiMenu != '0') $data->where('k_variasi_menu',$variasiMenu);
-        if ($fasilitas != '0') $data->where('k_fasilitas',$fasilitas);
-        if ($pelayanan != '0') $data->where('k_pelayanan',$pelayanan);
-        if ($lokasi != '0') $data->where('k_lokasi',$lokasi);
+
+        if ($suasana != '0') $data->where('k_suasana', $suasana);
+        if ($variasiMenu != '0') $data->where('k_variasi_menu', $variasiMenu);
+        if ($fasilitas != '0') $data->where('k_fasilitas', $fasilitas);
+        if ($pelayanan != '0') $data->where('k_pelayanan', $pelayanan);
+        if ($lokasi != '0') $data->where('k_lokasi', $lokasi);
 
         foreach ($data->get() as $alternatif) {
             $nilai = [];
@@ -112,7 +112,7 @@ class SmartController extends Controller
             $kriteria->pluck('utility')->toArray()
         );
 
-        return view('pages.rekomendasi',[
+        return view('pages.rekomendasi', [
             'cafe' => $data->get(),
             'kriteria' => $kriteria,
             'normalisasi' => $result[0],

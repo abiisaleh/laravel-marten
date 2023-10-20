@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\cafe;
-use App\Models\kriteria;
-use App\Models\subkriteria;
+use App\Models\Cafe;
+use App\Models\Kriteria;
+use App\Models\Subkriteria;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
