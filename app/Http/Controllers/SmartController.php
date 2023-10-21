@@ -91,6 +91,10 @@ class SmartController extends Controller
         if ($pelayanan != '0') $data->where('k_pelayanan', $pelayanan);
         if ($lokasi != '0') $data->where('k_lokasi', $lokasi);
 
+        if (is_null($data->first())) {
+            return view('pages.rekomendasi404');
+        }
+
         foreach ($data->get() as $alternatif) {
             $nilai = [];
             $nilai['nilai'][] = subkriteria::find($alternatif->k_suasana)->nilai;

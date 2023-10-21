@@ -8,6 +8,7 @@ use App\Filament\Resources\CafeResource\RelationManagers\MenuRelationManager;
 use App\Filament\Resources\CafeResource\Widgets\CafeOverview;
 use App\Models\Cafe;
 use App\Models\subkriteria;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Group;
@@ -17,6 +18,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -48,42 +50,81 @@ class CafeResource extends Resource
                         // Placeholder::make('pemilik')
                         //     ->content(fn (Cafe $record): ?string => $record->members()->toArray()[0]['name'].' ('.$record->members()->toArray()[0]['email'].')'),
                         Placeholder::make('alamat')
-                            ->content(fn (Cafe $record): ?string => $record->alamat.', Kel. '.$record->kelurahan.', Kec. '.$record->kecamatan),
+                            ->content(fn (Cafe $record): ?string => $record->alamat . ', Kel. ' . $record->kelurahan . ', Kec. ' . $record->kecamatan),
                         Placeholder::make('Total Menu')
                             ->content(fn (Cafe $record): ?string => $record->menu()->count()),
                     ])
-                    ->columnSpan(['lg' => 1]),
-                
+                    ->columnSpan(['lg' => 1])
+                    ->visibleOn('edit'),
+
+                Section::make('Detail Cafe')
+                    ->schema([
+                        Select::make('user_id')
+                            ->relationship('members', 'name'),
+                        TextInput::make('nama')
+                            ->required(),
+                        Select::make('kecamatan')
+                            ->native(false)
+                            ->options(function () {
+                                $data = File::json('kotajayapura.json');
+                                foreach ($data as $key => $value) {
+                                    $options[$key] = $key;
+                                }
+                                return $options;
+                            })
+                            ->required(),
+                        Select::make('kelurahan')
+                            ->native(false)
+                            ->options(function (Get $get) {
+                                $kecamatan = $get('kecamatan');
+                                $data = File::json('kotajayapura.json');
+                                if (!$kecamatan) {
+                                    return [];
+                                }
+
+                                foreach ($data[$kecamatan] as $item) {
+                                    $options[$item] = $item;
+                                }
+                                return $options;
+                            })
+                            ->required(),
+                        Textarea::make('alamat')
+                            ->rows(5)
+                            ->required(),
+                    ])
+                    ->columnSpan(['lg' => 1])
+                    ->visibleOn('create'),
+
                 Section::make('Kriteria Penilaian')
                     ->schema([
                         Select::make('k_suasana')
                             ->label('Suasana')
                             ->options(
-                                subkriteria::where('kriteria_id',1)->pluck('nama','id')
+                                subkriteria::where('kriteria_id', 1)->pluck('nama', 'id')
                             )
                             ->native(false),
                         Select::make('k_variasi_menu')
                             ->label('Variasi Menu')
                             ->options(
-                                subkriteria::where('kriteria_id',2)->pluck('nama','id')
+                                subkriteria::where('kriteria_id', 2)->pluck('nama', 'id')
                             )
                             ->native(false),
                         Select::make('k_fasilitas')
                             ->label('Fasilitas')
                             ->options(
-                                subkriteria::where('kriteria_id',3)->pluck('nama','id')
+                                subkriteria::where('kriteria_id', 3)->pluck('nama', 'id')
                             )
                             ->native(false),
                         Select::make('k_pelayanan')
                             ->label('Pelayanan')
                             ->options(
-                                subkriteria::where('kriteria_id',4)->pluck('nama','id')
+                                subkriteria::where('kriteria_id', 4)->pluck('nama', 'id')
                             )
                             ->native(false),
                         Select::make('k_lokasi')
                             ->label('Lokasi')
                             ->options(
-                                subkriteria::where('kriteria_id',5)->pluck('nama','id')
+                                subkriteria::where('kriteria_id', 5)->pluck('nama', 'id')
                             )
                             ->native(false),
                     ])
@@ -103,25 +144,27 @@ class CafeResource extends Resource
             ])
             ->filters([
                 Filter::make('Dinilai')
-                    ->query(fn (Builder $query): Builder => $query
-                        ->where('k_suasana','!=',null)
-                        ->orWhere('k_variasi_menu','!=',null)
-                        ->orWhere('k_fasilitas','!=',null)
-                        ->orWhere('k_pelayanan','!=',null)
-                        ->orWhere('k_lokasi','!=',null)
+                    ->query(
+                        fn (Builder $query): Builder => $query
+                            ->where('k_suasana', '!=', null)
+                            ->orWhere('k_variasi_menu', '!=', null)
+                            ->orWhere('k_fasilitas', '!=', null)
+                            ->orWhere('k_pelayanan', '!=', null)
+                            ->orWhere('k_lokasi', '!=', null)
                     )
                     ->checkbox(),
                 Filter::make('Belum Dinilai')
-                    ->query(fn (Builder $query): Builder => $query
-                        ->where('k_suasana',null)
-                        ->orWhere('k_variasi_menu',null)
-                        ->orWhere('k_fasilitas',null)
-                        ->orWhere('k_pelayanan',null)
-                        ->orWhere('k_lokasi',null)
+                    ->query(
+                        fn (Builder $query): Builder => $query
+                            ->where('k_suasana', null)
+                            ->orWhere('k_variasi_menu', null)
+                            ->orWhere('k_fasilitas', null)
+                            ->orWhere('k_pelayanan', null)
+                            ->orWhere('k_lokasi', null)
                     )
                     ->checkbox(),
                 SelectFilter::make('kecamatan')
-                    ->options(function() {
+                    ->options(function () {
                         $data = File::json('kotajayapura.json');
                         foreach ($data as $key => $value) {
                             $options[$key] = $key;
@@ -138,14 +181,14 @@ class CafeResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             MenuRelationManager::class
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -153,8 +196,8 @@ class CafeResource extends Resource
             'create' => Pages\CreateCafe::route('/create'),
             'edit' => Pages\EditCafe::route('/{record}/edit'),
         ];
-    }  
-    
+    }
+
     public static function getWidgets(): array
     {
         return [

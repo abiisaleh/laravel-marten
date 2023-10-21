@@ -17,7 +17,7 @@ class Cafe extends Model implements HasName
 
     public function menu(): HasMany
     {
-        return $this->hasMany(menu::class);
+        return $this->hasMany(Menu::class);
     }
 
     public function members(): BelongsTo
