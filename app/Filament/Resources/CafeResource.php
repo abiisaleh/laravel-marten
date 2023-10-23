@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CafeResource\Pages;
 use App\Filament\Resources\CafeResource\RelationManagers;
 use App\Filament\Resources\CafeResource\RelationManagers\MenuRelationManager;
-use App\Filament\Resources\CafeResource\Widgets\CafeOverview;
 use App\Models\Cafe;
 use App\Models\subkriteria;
 use App\Models\User;
@@ -57,44 +56,6 @@ class CafeResource extends Resource
                     ->columnSpan(['lg' => 1])
                     ->visibleOn('edit'),
 
-                Section::make('Detail Cafe')
-                    ->schema([
-                        Select::make('user_id')
-                            ->relationship('members', 'name'),
-                        TextInput::make('nama')
-                            ->required(),
-                        Select::make('kecamatan')
-                            ->native(false)
-                            ->options(function () {
-                                $data = File::json('kotajayapura.json');
-                                foreach ($data as $key => $value) {
-                                    $options[$key] = $key;
-                                }
-                                return $options;
-                            })
-                            ->required(),
-                        Select::make('kelurahan')
-                            ->native(false)
-                            ->options(function (Get $get) {
-                                $kecamatan = $get('kecamatan');
-                                $data = File::json('kotajayapura.json');
-                                if (!$kecamatan) {
-                                    return [];
-                                }
-
-                                foreach ($data[$kecamatan] as $item) {
-                                    $options[$item] = $item;
-                                }
-                                return $options;
-                            })
-                            ->required(),
-                        Textarea::make('alamat')
-                            ->rows(5)
-                            ->required(),
-                    ])
-                    ->columnSpan(['lg' => 1])
-                    ->visibleOn('create'),
-
                 Section::make('Kriteria Penilaian')
                     ->schema([
                         Select::make('k_suasana')
@@ -143,26 +104,6 @@ class CafeResource extends Resource
                 TextColumn::make('kecamatan'),
             ])
             ->filters([
-                Filter::make('Dinilai')
-                    ->query(
-                        fn (Builder $query): Builder => $query
-                            ->where('k_suasana', '!=', null)
-                            ->orWhere('k_variasi_menu', '!=', null)
-                            ->orWhere('k_fasilitas', '!=', null)
-                            ->orWhere('k_pelayanan', '!=', null)
-                            ->orWhere('k_lokasi', '!=', null)
-                    )
-                    ->checkbox(),
-                Filter::make('Belum Dinilai')
-                    ->query(
-                        fn (Builder $query): Builder => $query
-                            ->where('k_suasana', null)
-                            ->orWhere('k_variasi_menu', null)
-                            ->orWhere('k_fasilitas', null)
-                            ->orWhere('k_pelayanan', null)
-                            ->orWhere('k_lokasi', null)
-                    )
-                    ->checkbox(),
                 SelectFilter::make('kecamatan')
                     ->options(function () {
                         $data = File::json('kotajayapura.json');
@@ -173,7 +114,7 @@ class CafeResource extends Resource
                     }),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Nilai'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -193,15 +134,13 @@ class CafeResource extends Resource
     {
         return [
             'index' => Pages\ListCafes::route('/'),
-            'create' => Pages\CreateCafe::route('/create'),
+            // 'create' => Pages\CreateCafe::route('/create'),
             'edit' => Pages\EditCafe::route('/{record}/edit'),
         ];
     }
 
-    public static function getWidgets(): array
+    public static function canCreate(): bool
     {
-        return [
-            CafeOverview::class,
-        ];
+        return false;
     }
 }

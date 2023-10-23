@@ -6,8 +6,6 @@
 
         <title>{{ env("APP_NAME") }}</title>
 
-        <link rel="icon" type="image/svg+xml" sizes="21x21" href="Picture1.svg">
-
         @vite(['resources/js/app.js'])
 
         <script>

@@ -15,6 +15,8 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -42,12 +44,13 @@ class UserResource extends Resource
             ->columns([
                 TextColumn::make('name'),
                 TextColumn::make('email'),
-                IconColumn::make('is_admin')
-                    ->label('Admin')
-                    ->boolean(),
+                TextColumn::make('cafe_count')
+                    ->label('Total Cafe')
+                    ->counts('cafe'),
             ])
             ->filters([
-                //
+                TernaryFilter::make('is_admin')
+                    ->default(false)
             ])
             ->actions([
                 Tables\Actions\DeleteAction::make(),
@@ -62,7 +65,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\CafeRelationManager::class,
         ];
     }
 

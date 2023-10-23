@@ -3,15 +3,13 @@
 namespace App\Filament\Resources\CafeResource\Pages;
 
 use App\Filament\Resources\CafeResource;
-use App\Filament\Resources\CafeResource\Widgets\CafeOverview;
 use Filament\Actions;
-use Filament\Pages\Concerns\ExposesTableToWidgets;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Resources\Pages\ListRecords\Tab;
 
 class ListCafes extends ListRecords
 {
-    use ExposesTableToWidgets;
-
     protected static string $resource = CafeResource::class;
 
     protected function getHeaderActions(): array
@@ -24,7 +22,28 @@ class ListCafes extends ListRecords
     protected function getHeaderWidgets(): array
     {
         return [
-            CafeOverview::class,
+            //
+        ];
+    }
+
+    public function getTabs(): array
+    {
+        return [
+            'all' => Tab::make(),
+            'active' => Tab::make()
+                ->modifyQueryUsing(fn (Builder $query) => $query
+                    ->where('k_suasana', '!=', null)
+                    ->orWhere('k_variasi_menu', '!=', null)
+                    ->orWhere('k_fasilitas', '!=', null)
+                    ->orWhere('k_pelayanan', '!=', null)
+                    ->orWhere('k_lokasi', '!=', null)),
+            'inactive' => Tab::make()
+                ->modifyQueryUsing(fn (Builder $query) => $query
+                    ->where('k_suasana', '=', null)
+                    ->orWhere('k_variasi_menu', '=', null)
+                    ->orWhere('k_fasilitas', '=', null)
+                    ->orWhere('k_pelayanan', '=', null)
+                    ->orWhere('k_lokasi', '=', null)),
         ];
     }
 }
