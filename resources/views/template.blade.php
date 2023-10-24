@@ -39,8 +39,6 @@
             </nav>
         </header>
 
-        {{-- <div class="mt-12"></div> --}}
-
         @yield('content')
 
         <footer class="bg-white dark:bg-gray-900">
