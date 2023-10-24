@@ -58,7 +58,9 @@ class SmartController extends Controller
                 $uw[$i][] = $u * $w[$j];
             }
 
-            $result[$i]['alternatif'] = $alternatif[$i];
+
+            $result[$i]['id'] = $alternatif['id'][$i];
+            $result[$i]['alternatif'] = $alternatif['nama'][$i];
             $result[$i]['value'] = array_sum($uw[$i]);
         }
 
@@ -83,6 +85,11 @@ class SmartController extends Controller
         $fasilitas = request('k_fasilitas');
         $variasiMenu = request('k_variasi_menu');
 
+        // jika tidak ada yang dipilih tampilkan error
+        if ($suasana == '0' & $fasilitas == '0' & $lokasi == '0' & $pelayanan == '0' & $variasiMenu == '0') {
+            return view('pages.rekomendasi404');
+        }
+
         $data = cafe::with('menu');
 
         if ($suasana != '0') $data->where('k_suasana', $suasana);
@@ -91,11 +98,13 @@ class SmartController extends Controller
         if ($pelayanan != '0') $data->where('k_pelayanan', $pelayanan);
         if ($lokasi != '0') $data->where('k_lokasi', $lokasi);
 
+        $data_alternatif = $data->get();
+
         if (is_null($data->first())) {
             return view('pages.rekomendasi404');
         }
 
-        foreach ($data->get() as $alternatif) {
+        foreach ($data_alternatif as $alternatif) {
             $nilai = [];
             $nilai['nilai'][] = subkriteria::find($alternatif->k_suasana)->nilai;
             $nilai['nilai'][] = subkriteria::find($alternatif->k_variasi_menu)->nilai;
@@ -107,17 +116,22 @@ class SmartController extends Controller
             $alt[] = $nilai;
         }
 
+        // dd($dataset);
+
         $kriteria = kriteria::all();
 
         $result = $this->smart(
-            $data->pluck('nama')->toArray(),
+            [
+                'nama' => $alternatif->pluck('nama')->toArray(),
+                'id' => $alternatif->pluck('id')->toArray()
+            ],
             $dataset,
             $kriteria->pluck('bobot')->toArray(),
             $kriteria->pluck('utility')->toArray()
         );
 
         return view('pages.rekomendasi', [
-            'cafe' => $data->get(),
+            'cafe' => cafe::where('id', $result[1][0]['id'])->get(),
             'kriteria' => $kriteria,
             'normalisasi' => $result[0],
             'alternatif' => $alt,

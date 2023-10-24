@@ -74,64 +74,66 @@
     </h2>
     <div id="accordion-collapse-body-2" class="hidden" aria-labelledby="accordion-collapse-heading-2">
       <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
-        <p class="mb-2 text-gray-500 dark:text-gray-400">Flowbite is first conceptualized and designed using the Figma software so everything you see in the library has a design equivalent in our Figma file.</p>
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                  <th scope="col" class="px-6 py-3" width="10px">
-                      #
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                      Cafe
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                      K1
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                      K2
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                      K3
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                      K4
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                      K5
-                  </th>
-              </tr>
-          </thead>
-          <tbody>
-              @php
-                  $i = 1
-              @endphp
-              @foreach ($alternatif as $item)
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <td class="px-6 py-4">
-                      {{$i++}}
-                  </td>
-                  <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      {{ $item['nama'] }}
-                  </th>
-                  <td class="px-6 py-4">
-                      {{ $item['nilai'][0] }}
-                  </td>
-                  <td class="px-6 py-4">
-                      {{ $item['nilai'][1] }}
-                  </td>
-                  <td class="px-6 py-4">
-                      {{ $item['nilai'][2] }}
-                  </td>
-                  <td class="px-6 py-4">
-                      {{ $item['nilai'][3] }}
-                  </td>
-                  <td class="px-6 py-4">
-                      {{ $item['nilai'][4] }}
-                  </td>
-              </tr>
-              @endforeach
-          </tbody>
-        </table>
+        <p class="mb-2 text-gray-500 dark:text-gray-400">Berikut merupakan data yang sesuai dengan kriteria yang dipilih.</p>
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3" width="10px">
+                        #
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Cafe
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        K1
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        K2
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        K3
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        K4
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        K5
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $i = 1
+                @endphp
+                @foreach ($alternatif as $item)
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <td class="px-6 py-4">
+                        {{ $i++ }}
+                    </td>
+                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ $item['nama'] }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $item['nilai'][0] }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $item['nilai'][1] }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $item['nilai'][2] }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $item['nilai'][3] }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $item['nilai'][4] }}
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+            </table>
+        </div>
       </div>
     </div>
     <h2 id="accordion-collapse-heading-4">
@@ -190,47 +192,47 @@
                   @endphp
                   @foreach ($alternatif as $item)
                   <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                           {{ $item['nama'] }}
                       </td>
-                      <th scope="row" class="px-6 py-4">
+                      <td class="px-6 py-4">
                           {{ round($utility[$i][0],3) }}
-                      </th>
-                      <th scope="row" class="px-6 py-4">
+                      </td>
+                      <td class="px-6 py-4">
                           {{ round($utility[$i][1],3) }}
-                      </th>
-                      <th scope="row" class="px-6 py-4">
+                      </td>
+                      <td class="px-6 py-4">
                           {{ round($utility[$i][2],3) }}
-                      </th>
-                      <th scope="row" class="px-6 py-4">
+                      </td>
+                      <td class="px-6 py-4">
                           {{ round($utility[$i][3],3) }}
-                      </th>
-                      <th scope="row" class="px-6 py-4">
+                      </td>
+                      <td class="px-6 py-4">
                           {{ round($utility[$i][4],3) }}
-                      </th>
-                      <th scope="row" class="px-6 py-4">
+                      </td>
+                      <td class="px-6 py-4">
                           {{ round($uw[$i][0],3) }}
-                      </th>
-                      <th scope="row" class="px-6 py-4">
+                      </td>
+                      <td class="px-6 py-4">
                           {{ round($uw[$i][1],3) }}
-                      </th>
-                      <th scope="row" class="px-6 py-4">
+                      </td>
+                      <td class="px-6 py-4">
                           {{ round($uw[$i][2],3) }}
-                      </th>
-                      <th scope="row" class="px-6 py-4">
+                      </td>
+                      <td class="px-6 py-4">
                           {{ round($uw[$i][3],3) }}
-                      </th>
-                      <th scope="row" class="px-6 py-4">
+                      </td>
+                      <td class="px-6 py-4">
                           {{ round($uw[$i][4],3) }}
-                      </th>
-                      @php
-                          $i++;
-                      @endphp
+                      </td>
                   </tr>
+                    @php
+                        $i++;
+                    @endphp
                   @endforeach
               </tbody>
           </table>
-      </div>
+        </div>
       </div>
     </div>
     <h2 id="accordion-collapse-heading-4">
