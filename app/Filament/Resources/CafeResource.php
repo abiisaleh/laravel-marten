@@ -6,7 +6,7 @@ use App\Filament\Resources\CafeResource\Pages;
 use App\Filament\Resources\CafeResource\RelationManagers;
 use App\Filament\Resources\CafeResource\RelationManagers\MenuRelationManager;
 use App\Models\Cafe;
-use App\Models\subkriteria;
+use App\Models\Subkriteria;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Fieldset;
@@ -61,31 +61,31 @@ class CafeResource extends Resource
                         Select::make('k_suasana')
                             ->label('Suasana')
                             ->options(
-                                subkriteria::where('kriteria_id', 1)->pluck('nama', 'id')
+                                Subkriteria::where('kriteria_id', 1)->pluck('nama', 'id')
                             )
                             ->native(false),
                         Select::make('k_variasi_menu')
                             ->label('Variasi Menu')
                             ->options(
-                                subkriteria::where('kriteria_id', 2)->pluck('nama', 'id')
+                                Subkriteria::where('kriteria_id', 2)->pluck('nama', 'id')
                             )
                             ->native(false),
                         Select::make('k_fasilitas')
                             ->label('Fasilitas')
                             ->options(
-                                subkriteria::where('kriteria_id', 3)->pluck('nama', 'id')
+                                Subkriteria::where('kriteria_id', 3)->pluck('nama', 'id')
                             )
                             ->native(false),
                         Select::make('k_pelayanan')
                             ->label('Pelayanan')
                             ->options(
-                                subkriteria::where('kriteria_id', 4)->pluck('nama', 'id')
+                                Subkriteria::where('kriteria_id', 4)->pluck('nama', 'id')
                             )
                             ->native(false),
                         Select::make('k_lokasi')
                             ->label('Lokasi')
                             ->options(
-                                subkriteria::where('kriteria_id', 5)->pluck('nama', 'id')
+                                Subkriteria::where('kriteria_id', 5)->pluck('nama', 'id')
                             )
                             ->native(false),
                     ])
