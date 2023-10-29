@@ -25,6 +25,9 @@ class MenuResource extends Resource
 
     protected static ?string $pluralLabel = 'Menu';
 
+    protected static ?string $tenantRelationshipName = 'menu';
+
+
     public static function form(Form $form): Form
     {
         return $form
@@ -64,14 +67,14 @@ class MenuResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -79,5 +82,5 @@ class MenuResource extends Resource
             'create' => Pages\CreateMenu::route('/create'),
             'edit' => Pages\EditMenu::route('/{record}/edit'),
         ];
-    }    
+    }
 }
