@@ -4,7 +4,7 @@
     </a>
     <div class="p-5 text-left">
         <a href="detail/{{ $id }}">
-            <h5 class="mb-2 text-xl  font-bold tracking-tight text-gray-900 dark:text-white">{{ $nama }}</h5>
+            <h5 class="mb-2 text-xl  font-bold tracking-tight text-gray-900 dark:text-white">{!! $nama !!}</h5>
         </a>
 
         <span class="bg-primary-100 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">{{ $kelurahan }} • {{ $kecamatan }}</span>
