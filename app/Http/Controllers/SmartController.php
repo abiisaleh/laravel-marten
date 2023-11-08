@@ -122,8 +122,8 @@ class SmartController extends Controller
 
         $result = $this->smart(
             [
-                'nama' => $alternatif->pluck('nama')->toArray(),
-                'id' => $alternatif->pluck('id')->toArray()
+                'nama' => $data_alternatif->pluck('nama')->toArray(),
+                'id' => $data_alternatif->pluck('id')->toArray()
             ],
             $dataset,
             $kriteria->pluck('bobot')->toArray(),
