@@ -20,9 +20,9 @@ class Cafe extends Model implements HasName
         return $this->hasMany(Menu::class);
     }
 
-    public function members(): BelongsTo
+    public function members(): BelongsToMany
     {
-        return $this->BelongsTo(User::class);
+        return $this->belongsToMany(User::class);
     }
 
     public function getFilamentName(): string
