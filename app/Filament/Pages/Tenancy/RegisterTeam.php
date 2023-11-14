@@ -59,7 +59,7 @@ class RegisterTeam extends RegisterTenant
     {
         $team = cafe::create($data);
 
-        $team->members()->attach(auth()->user());
+        $team->members()->associate(auth()->user());
 
         return $team;
     }
