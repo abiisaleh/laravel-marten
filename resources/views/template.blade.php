@@ -6,6 +6,8 @@
 
         <title>{{ env("APP_NAME") }}</title>
 
+        @filamentStyles
+
         @vite(['resources/js/app.js'])
 
         <script>
@@ -32,8 +34,35 @@
                         <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">☕ Smart Cafe</span>
                     </a>
                     <div class="flex items-center lg:order-2">
-                        {{-- <a href="admin" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Log in</a> --}}
-                        <a href="/app" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">Log In</a>
+                        <div>
+                            @if (auth()->check())              
+                                <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="flex items-center text-sm font-medium text-gray-900 rounded-full hover:text-blue-600 dark:hover:text-blue-500 md:me-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-white" type="button">
+                                    <span class="sr-only">Open user menu</span>
+                                    <img class="w-8 h-8 rounded-full" src="{{filament()->getUserAvatarUrl(auth()->user())}}" alt="user photo">
+                                </button>
+                                
+                                <!-- Dropdown menu -->
+                                <div id="dropdownAvatarName" class="z-10 hidden !-left-5 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                                    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                                    <div class="font-medium ">{{ucfirst(auth()->user()->role)}}</div>
+                                    <div class="truncate">{{auth()->user()->email}}</div>
+                                    </div>
+                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
+                                    <li>
+                                        <a href="/app" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                                    </li>
+                                    </ul>
+                                    <div class="py-2">
+                                        <form action="{{ filament()->getLogoutUrl() }}" method="post" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                            @csrf
+                                            <button type="submit" class="flex w-full">Sign out</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            @else
+                                <a href="/app/login" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">Login</a>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -47,6 +76,9 @@
                 <span class="block text-sm text-gray-500 text-center dark:text-gray-400">© 2023 made by <a class="hover:underline" href="http://github.com/abiisaleh">abiisaleh</a> with ❤️</span>
             </div>
         </footer>
+
+        @filamentScripts
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function(event) {
