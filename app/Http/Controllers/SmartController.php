@@ -132,6 +132,7 @@ class SmartController extends Controller
 
         return view('pages.rekomendasi', [
             'cafe' => cafe::where('id', $result[1][0]['id'])->get(),
+            'cafe_other' => $data_alternatif,
             'kriteria' => $kriteria,
             'normalisasi' => $result[0],
             'alternatif' => $alt,

@@ -284,9 +284,16 @@
   
 <div class="flex flex-wrap gap-3 mt-5">
     @foreach ($cafe as $item)
-    <x-card nama='{{$item->nama}}' kecamatan='{{$item->kecamatan}}' kelurahan='{{$item->kelurahan}}' alamat='{{$item->alamat}}' id='{{$item->id}}' gambar='{{$item->gambar}}' />
+        <x-card nama='{{$item->nama}}' kecamatan='{{$item->kecamatan}}' kelurahan='{{$item->kelurahan}}' alamat='{{$item->alamat}}' id='{{$item->id}}' gambar='{{$item->gambar}}' />
+    @endforeach
+</div>
+
+<h3 class="text-3xl font-bold dark:text-white">Cafe Lainnya</h3>
+  
+<div class="flex flex-wrap gap-3 mt-5">
+    @foreach ($cafe_other as $item)
+        <x-card nama='{{$item->nama}}' kecamatan='{{$item->kecamatan}}' kelurahan='{{$item->kelurahan}}' alamat='{{$item->alamat}}' id='{{$item->id}}' gambar='{{$item->gambar}}' />
         @endforeach
-    </div>
 </div>
 </section>
 @endsection

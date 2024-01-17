@@ -53,9 +53,9 @@
                                     </li>
                                     </ul>
                                     <div class="py-2">
-                                        <form action="{{ filament()->getLogoutUrl() }}" method="post" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                        <form action="/app/logout" method="post" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                             @csrf
-                                            <button type="submit" class="flex w-full">Sign out</button>
+                                            <button type="submit" class="flex w-full">Logout</button>
                                         </form>
                                     </div>
                                 </div>
